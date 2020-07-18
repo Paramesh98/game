@@ -1,0 +1,134 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://bootswatch.com/3/lumen/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+		
+		<style>
+		
+		</style>
+		
+		
+	</head>
+	<body>
+		
+			<div class="container text-center bg-dark">
+		
+			<div class="row bg-success">
+				<h3 class="">Word Beater</h3>
+			</div>
+			<div class="row">
+				<h4>Type the word given within 5 min</h4>
+			</div>
+		</div>
+		
+		<div class="container text-center">
+			<div class="row">
+				<h1 class="display1" id="display"></h1>
+				<button class="btn btn-danger btn-block" id="on">Start by Typing</button>
+			</div>
+			<div class="row">
+			<br />
+				<input type="text" id="text" class="form-control has-error" />
+			</div>
+			
+			<div class="row">
+				<h2 id="message"></h2>
+				<h3 id="">Time Left  <span id="time">5</span></h3>
+				<h3 id="scorebox">Score <span id="score">0</span></h3>
+			</div>
+			
+			<div class="row">
+				<div class="well">
+					<h3>Instruction</h3>
+					<p>Type the word the box</p>
+				</div>
+			</div>
+			
+		</div>
+		
+		
+		
+		<script>
+			let time = 5;
+			let score = 0;
+			let isPlaying;
+			
+			
+			var input = document.getElementById('text');
+			var current = document.getElementById('display');
+			var message = document.getElementById('message');
+			var times = document.getElementById('time');
+			var scores = document.getElementById('score');
+			var on = document.getElementById('on');
+			
+			var words = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
+			
+			
+			window.addEventListener('load', start);
+			input.addEventListener('input', startMatch)
+			
+			function startMatch(){
+				match();
+				if(match()){
+					console.log('match')
+					isPlaying = true;
+					time = 6;
+					score++;
+					showWord(words);
+					input.value = ''
+				}
+				
+				if(score == -1){
+					score.innerHTML = 0;
+				}else{
+				scores.innerHTML = score;
+				}
+			}
+			
+			function match(){
+				if(input.value === current.innerHTML){
+					message.innerHTML = 'coorect'
+					return true;
+				}
+				else{
+					message.innerHTML = 'wrong';
+					return false;
+				}
+			}
+			
+			function start(){
+				scores.innerHTML = 0;
+				input.focus();
+				showWord(words)
+				setInterval(func, 1000)
+				setInterval(check, 50)
+			}
+			
+			function showWord(words){
+				let a = Math.floor(Math.random()* words.length)
+				console.log(a);
+				current.innerHTML = words[a]
+			}
+			
+			function func(){
+				if(time > 0){
+					time--;
+				}
+				if(time === 0){
+					isPlaying = false;
+				}
+				times.innerHTML=time;
+			}
+			
+			function check(){
+				if (!isPlaying && time === 0){
+				
+					message.innerHTML = 'Game Over'
+					
+					score = -1;
+				}
+			}
+			
+	</script>
+	</body>
+</html>
